@@ -61,11 +61,11 @@ bool UFlibMovementEx::V_ActorSimpleMoveToDelegate(AActor* MoveActor, FVector Des
 }
 
 
-UActorMoveProxy* UFlibMovementEx::V_ActorNavMoveTo(AActor* MoveActor, FVector Des, AActor* Target, float LinearSpeed, float TurnSpeed, float AcceptanceRadius /*= 5.0*/, float DynamicTargetDetectInterval /*= 2.0f*/, bool bDebug /*= false*/, bool bTurnPitch, bool bTurnYaw, bool bTurnRoll)
+UActorMoveProxy* UFlibMovementEx::V_ActorNavMoveTo(AActor* MoveActor, FVector Des, AActor* Target, float LinearSpeed, float TurnSpeed, float AcceptanceRadius /*= 5.0*/, float DynamicTargetDetectInterval /*= 2.0f*/, bool bDebug /*= false*/, bool bTurnPitch, bool bTurnYaw, bool bTurnRoll, bool bKeepLanded)
 {
 	if (!MoveActor) { return nullptr; };
 	UActorMoveProxy* p = NewObject<UActorMoveProxy>(MoveActor);
-	p->ProxyActorNavMoveTo(MoveActor, Des, Target, LinearSpeed, TurnSpeed, AcceptanceRadius, bDebug, bTurnPitch, bTurnYaw, bTurnRoll);
+	p->ProxyActorNavMoveTo(MoveActor, Des, Target, LinearSpeed, TurnSpeed, AcceptanceRadius, bDebug, bTurnPitch, bTurnYaw, bTurnRoll,bKeepLanded);
 	return p;
 }
 

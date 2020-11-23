@@ -33,7 +33,7 @@ public:
 		void MoveEnd(EPathFollowingResult::Type Result);
 
 	UFUNCTION(BlueprintCallable, Category = "Tomb | MovementEx | Proxy", meta = (AdvancedDisplay = 5))
-		bool ProxyActorNavMoveTo(AActor* MoveActor, FVector Des, AActor* Target, float LinearSpeed = 300, float TurnSpeed = 90, float AcceptanceRadius = 5.0, bool bDebug =  false, bool bTurnPitch = true,bool bTurnYaw = true, bool bTurnRoll = true);
+		bool ProxyActorNavMoveTo(AActor* MoveActor, FVector Des, AActor* Target, float LinearSpeed = 300, float TurnSpeed = 90, float AcceptanceRadius = 5.0, bool bDebug =  false, bool bTurnPitch = true,bool bTurnYaw = true, bool bTurnRoll = true, bool bKeepLanded = true);
 
 	bool PathMoveToNextPoint();
 
@@ -110,5 +110,6 @@ protected:
 	bool TurnRoll = true;
 	bool TurnPitch = true;
 	bool TurnYaw = true;
+	bool KeepLanded = true;
 
 };

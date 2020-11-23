@@ -14,11 +14,17 @@
 	"IsBetaVersion": false,
 	"IsExperimentalVersion": false,
 	"Installed": false,
-	"Modules": [
-		{
-			"Name": "MovementEx",
-			"Type": "Runtime",
-			"LoadingPhase": "PreLoadingScreen"
-		}
-	]
+  "Modules": [
+    {
+      "Name": "MovementExEditor",
+      "Type": "Editor",
+      "LoadingPhase": "Default"
+    },
+    {
+      "Name": "MovementEx",
+      "Type": "Runtime",
+      "LoadingPhase": "PreLoadingScreen"
+    }
+
+  ]
 }

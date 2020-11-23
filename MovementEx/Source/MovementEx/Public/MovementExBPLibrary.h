@@ -17,7 +17,7 @@
 
 
 UCLASS()
-class UFlibMovementEx : public UBlueprintFunctionLibrary
+class MOVEMENTEX_API UFlibMovementEx : public UBlueprintFunctionLibrary
 {
 	GENERATED_UCLASS_BODY()
 
@@ -74,6 +74,6 @@ class UFlibMovementEx : public UBlueprintFunctionLibrary
 	* TurnSpeed: 转身速度,<=0 意味着不会转身
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Tomb | MovementEx", meta = (AdvancedDisplay = 5))
-		static	UActorMoveProxy* V_ActorNavMoveTo(AActor* MoveActor, FVector Des, AActor* Target, float LinearSpeed = 300, float TurnSpeed = 90, float AcceptanceRadius = 5.0, float DynamicTargetDetectInterval = 2.0f, bool bDebug = false, bool bTurnPitch = true, bool bTurnYaw = true, bool bTurnRoll = true);
+		static	UActorMoveProxy* V_ActorNavMoveTo(AActor* MoveActor, FVector Des, AActor* Target, float LinearSpeed = 300, float TurnSpeed = 90, float AcceptanceRadius = 5.0, float DynamicTargetDetectInterval = 2.0f, bool bDebug = false, bool bTurnPitch = true, bool bTurnYaw = true, bool bTurnRoll = true, bool bKeepLanded = true);
 
 };

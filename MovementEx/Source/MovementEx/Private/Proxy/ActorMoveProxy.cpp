@@ -8,6 +8,8 @@
 #include "Engine/World.h"
 #include "NavigationSystem.h"
 #include "NavigationPath.h"
+#include "GameFramework/Character.h"
+#include "Components/CapsuleComponent.h"
 
 
 
@@ -103,12 +105,13 @@ void UActorMoveProxy::MoveEnd(EPathFollowingResult::Type Result)
 	
 }
 
-bool UActorMoveProxy::ProxyActorNavMoveTo(AActor* MoveActor, FVector Des, AActor* Target, float LinearSpeed, float TurnSpeed, float AcceptanceRadius /*= 5.0*/, bool bDebug, bool bTurnPitch, bool bTurnYaw, bool bTurnRoll)
+bool UActorMoveProxy::ProxyActorNavMoveTo(AActor* MoveActor, FVector Des, AActor* Target, float LinearSpeed, float TurnSpeed, float AcceptanceRadius /*= 5.0*/, bool bDebug, bool bTurnPitch, bool bTurnYaw, bool bTurnRoll, bool bKeepLanded)
 {
 	if (bIsInit || !MoveActor || UKismetSystemLibrary::K2_IsTimerActiveHandle(this, m_timer))
 	{
 		return false;
 	}
+	KeepLanded = bKeepLanded;
 	TurnPitch = bTurnPitch;
 	TurnYaw = bTurnYaw;
 	TurnRoll = bTurnRoll;
@@ -281,20 +284,45 @@ void UActorMoveProxy::Tick(float DeltaTime)
 
 		m_currLoc = m_startLoc + m_curOffsetLoc;
 
-		if (m_TargetActor && !bIsPathMove)
-		{
-			FRotator rot = UKismetMathLibrary::Conv_VectorToRotator(m_TargetActor->GetActorLocation() - m_currLoc);
+	
+			
+		FRotator rot = UKismetMathLibrary::Conv_VectorToRotator((bIsPathMove?m_tarLoc:(m_TargetActor? m_TargetActor->GetActorLocation(): m_tarLoc)) - m_currLoc);
 
-			rot.Pitch = TurnPitch ? rot.Pitch : m_currRot.Pitch;
-			rot.Yaw = TurnYaw ? rot.Yaw : m_currRot.Yaw;
-			rot.Roll = TurnRoll ? rot.Roll : m_currRot.Roll;
-			m_tarRot = rot == FRotator::ZeroRotator ? m_tarRot : rot;
+		rot.Pitch = TurnPitch ? rot.Pitch : m_currRot.Pitch;
+		rot.Yaw = TurnYaw ? rot.Yaw : m_currRot.Yaw;
+		rot.Roll = TurnRoll ? rot.Roll : m_currRot.Roll;
+		m_tarRot = rot == FRotator::ZeroRotator ? m_tarRot : rot;
+		if (KeepLanded)
+		{
+			TArray<AActor*> ignoreList;
+			ignoreList.Add(m_MoveActor);
+			FHitResult res;
+			if (m_MoveActor && UKismetSystemLibrary::LineTraceSingle(m_MoveActor, m_MoveActor->GetActorLocation(), m_MoveActor->GetActorLocation() - FVector(0, 0, 1000), ETraceTypeQuery::TraceTypeQuery1, false,
+				ignoreList, Debug ? EDrawDebugTrace::ForOneFrame : EDrawDebugTrace::None, res, false))
+			{
+				FVector navPoint;
+				if (UNavigationSystemV1::K2_ProjectPointToNavigation(m_MoveActor, res.ImpactPoint, navPoint, nullptr, nullptr))
+				{
+					ACharacter* c = Cast<ACharacter>(m_MoveActor);
+					if (c)
+					{
+						m_currLoc.Z = navPoint.Z + c->GetCapsuleComponent()->GetScaledCapsuleHalfHeight();
+					}
+					else
+					{
+						m_currLoc.Z = navPoint.Z;
+					}
+					
+				}
+			}
+
 		}
 
 		bNeedRot = m_TurnSpeed > 0;
 		if (bNeedRot)
 		{
 			m_currRot = UKismetMathLibrary::RInterpTo_Constant(m_currRot, m_tarRot, DeltaTime, m_TurnSpeed);
+			
 			m_MoveActor->SetActorLocationAndRotation(m_currLoc, m_currRot);
 		}
 		else
