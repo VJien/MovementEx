@@ -69,3 +69,78 @@ UActorMoveProxy* UFlibMovementEx::V_ActorNavMoveTo(AActor* MoveActor, FVector De
 	return p;
 }
 
+URotateProxy* UFlibMovementEx::V_ActorRotationBySpeed(AActor* RotateActor, FRotator Rotation, float Speed /*= 90*/, bool bIsAdditive /*= false*/)
+{
+	if (!RotateActor) { return nullptr; };
+	URotateProxy* p = NewObject<URotateProxy>(RotateActor);
+	if (p->ProxyActorRotation(RotateActor, Rotation, Speed, bIsAdditive))
+	{
+		return p;
+	}
+	return nullptr;	
+}
+
+bool UFlibMovementEx::V_ActorRotationBySpeedDelegate(AActor* RotateActor, FRotator Rotation, const FActorSimpleRotateDlg& RotationEndEvent, float Speed /*= 90*/, bool bIsAdditive /*= false*/)
+{
+	if (!RotateActor) { return nullptr; };
+	URotateProxy* p = NewObject<URotateProxy>(RotateActor);
+	if (p->ProxyActorRotationDelegate(RotateActor, Rotation, RotationEndEvent, Speed, bIsAdditive))
+	{
+		return true;
+	}
+	return false;
+}
+
+URotateProxy* UFlibMovementEx::V_ActorRotateByTime(AActor* RotateActor, FRotator Rotation, float Time /*= 1*/, bool bIsAdditive /*= false*/)
+{
+	if (!RotateActor || Time <= 0) { return nullptr; };
+	FRotator rot = RotateActor->GetActorRotation();
+	FVector delta;
+	if (bIsAdditive)
+	{
+		delta.X = Rotation.Roll;
+		delta.Y = Rotation.Pitch;
+		delta.Z = Rotation.Yaw;
+	}
+	else
+	{
+		delta.X = rot.Roll - Rotation.Roll;
+		delta.Y = rot.Pitch - Rotation.Pitch;
+		delta.Z = rot.Yaw - Rotation.Yaw;
+	}
+	
+	float max = delta.GetAbsMax();
+	URotateProxy* p = NewObject<URotateProxy>(RotateActor);
+	if (p->ProxyActorRotation(RotateActor, Rotation, max/Time, bIsAdditive))
+	{
+		return p;
+	}
+	return nullptr;
+}
+
+bool UFlibMovementEx::V_ActorRotateByTimeDelegate(AActor* RotateActor, FRotator Rotation, const FActorSimpleRotateDlg& RotationEndEvent, float Time /*= 1*/, bool bIsAdditive /*= false*/)
+{
+	if (!RotateActor || Time <= 0) { return nullptr; };
+	FRotator rot = RotateActor->GetActorRotation();
+	FVector delta;
+	if (bIsAdditive)
+	{
+		delta.X = Rotation.Roll;
+		delta.Y = Rotation.Pitch;
+		delta.Z = Rotation.Yaw;
+	}
+	else
+	{
+		delta.X = rot.Roll - Rotation.Roll;
+		delta.Y = rot.Pitch - Rotation.Pitch;
+		delta.Z = rot.Yaw - Rotation.Yaw;
+	}
+	float max = delta.GetAbsMax();
+	URotateProxy* p = NewObject<URotateProxy>(RotateActor);
+	if (p->ProxyActorRotationDelegate(RotateActor, Rotation, RotationEndEvent, max / Time, bIsAdditive))
+	{
+		return true;
+	}
+	return false;
+}
+

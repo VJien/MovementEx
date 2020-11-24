@@ -7,7 +7,7 @@
 #include "Proxy/ActorMoveProxy.h"
 #include "Proxy/PathMoveProxy.h"
 
-
+#include "Proxy/RotateProxy.h"
 #include "MovementExBPLibrary.generated.h"
 
 
@@ -76,4 +76,40 @@ class MOVEMENTEX_API UFlibMovementEx : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintCallable, Category = "Tomb | MovementEx", meta = (AdvancedDisplay = 5))
 		static	UActorMoveProxy* V_ActorNavMoveTo(AActor* MoveActor, FVector Des, AActor* Target, float LinearSpeed = 300, float TurnSpeed = 90, float AcceptanceRadius = 5.0, float DynamicTargetDetectInterval = 2.0f, bool bDebug = false, bool bTurnPitch = true, bool bTurnYaw = true, bool bTurnRoll = true, bool bKeepLanded = true);
 
+
+	/*
+	* 旋转actor, 回调事件通过绑定返回的Obj手动绑定
+	* Speed: 旋转速度,<=0 不可以小于等于0
+	* bIsAdditive: 是否是增加多少旋转值
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Tomb | MovementEx", meta = (AdvancedDisplay = 5))
+		static URotateProxy* V_ActorRotationBySpeed(AActor* RotateActor, FRotator Rotation, float Speed = 90, bool bIsAdditive = false);
+
+
+	/*
+	* 旋转actor代理版本,  回调事件通过动态代理返回
+	* Speed: 旋转速度,<=0 不可以小于等于0
+	* bIsAdditive: 是否是增加多少旋转值
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Tomb | MovementEx", meta = (AdvancedDisplay = 5))
+		static bool V_ActorRotationBySpeedDelegate(AActor* RotateActor, FRotator Rotation, const FActorSimpleRotateDlg& RotationEndEvent, float Speed = 90, bool bIsAdditive = false);
+
+
+	/*
+	* 旋转actor, 回调事件通过绑定返回的Obj手动绑定
+	* Time: 旋转时间, 不可以小于等于0
+	* bIsAdditive: 是否是增加多少旋转值
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Tomb | MovementEx", meta = (AdvancedDisplay = 5))
+		static URotateProxy* V_ActorRotateByTime(AActor* RotateActor, FRotator Rotation, float Time = 1, bool bIsAdditive = false);
+
+
+
+	/*
+	* 旋转actor, 回调事件通过绑定返回的Obj手动绑定
+	* Time: 旋转时间, 不可以小于等于0
+	* bIsAdditive: 是否是增加多少旋转值
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Tomb | MovementEx", meta = (AdvancedDisplay = 5))
+		static bool V_ActorRotateByTimeDelegate(AActor* RotateActor, FRotator Rotation, const FActorSimpleRotateDlg& RotationEndEvent, float Time = 1, bool bIsAdditive = false);
 };

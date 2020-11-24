@@ -17,6 +17,6 @@ class MOVEMENTEXEDITOR_API UK2Node_AIPathMoveTo : public UK2Node_BaseAsyncTask
 
 public:
 	virtual FText GetTooltipText() const override;
-	virtual FText GetNodeTitle(ENodeTitleType::Type TitleType) const override;//½ÚµãµÄÃû×Ö
-	virtual FText GetMenuCategory() const override;//·ÖÀà
+	virtual FText GetNodeTitle(ENodeTitleType::Type TitleType) const override;//ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	virtual FText GetMenuCategory() const override;//ï¿½ï¿½ï¿½ï¿½
 };

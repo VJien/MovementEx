@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "K2Node_BaseAsyncTask.h"
-#include "K2Node_SimpleNavMoveTo.generated.h"
+#include "K2Node_SimpleRotate.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class MOVEMENTEXEDITOR_API UK2Node_SimpleNavMoveTo : public UK2Node_BaseAsyncTask
+class MOVEMENTEXEDITOR_API UK2Node_SimpleRotate : public UK2Node_BaseAsyncTask
 {
 	GENERATED_UCLASS_BODY()
 	

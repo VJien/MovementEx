@@ -17,12 +17,12 @@ UK2Node_SimpleMoveTo::UK2Node_SimpleMoveTo(const FObjectInitializer& ObjectIniti
 
 FText UK2Node_SimpleMoveTo::GetTooltipText() const
 {
-	return NSLOCTEXT("UK2Node_SimpleMoveTo", "SimpleMoveTo", "SimpleMoveTo");
+	return NSLOCTEXT("UK2Node_SimpleMoveTo", "Actor Simple Move To", "Actor Simple Move To");
 }
 
 FText UK2Node_SimpleMoveTo::GetNodeTitle(ENodeTitleType::Type TitleType) const
 {
-	return NSLOCTEXT("UK2Node_SimpleMoveTo", "SimpleMoveTo", "SimpleMoveTo");
+	return NSLOCTEXT("UK2Node_SimpleMoveTo", "Actor Simple Move To", "Actor Simple Move To");
 }
 
 FText UK2Node_SimpleMoveTo::GetMenuCategory() const

@@ -17,12 +17,12 @@ UK2Node_AIPathMoveTo::UK2Node_AIPathMoveTo(const FObjectInitializer& ObjectIniti
 
 FText UK2Node_AIPathMoveTo::GetTooltipText() const
 {
-	return NSLOCTEXT("UK2Node_AIPathMoveTo", "AIPathMoveTo", "AIPathMoveTo");
+	return NSLOCTEXT("UK2Node_AIPathMoveTo", "move by a path point list", "move by a path point list");
 }
 
 FText UK2Node_AIPathMoveTo::GetNodeTitle(ENodeTitleType::Type TitleType) const
 {
-	return NSLOCTEXT("UK2Node_AIPathMoveTo", "AIPathMoveTo", "AIPathMoveTo");
+	return NSLOCTEXT("UK2Node_AIPathMoveTo", "AI Path Move To", "AI Path Move To");
 }
 
 FText UK2Node_AIPathMoveTo::GetMenuCategory() const

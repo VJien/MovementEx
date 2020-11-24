@@ -284,6 +284,7 @@ void UActorMoveProxy::Tick(float DeltaTime)
 
 		m_currLoc = m_startLoc + m_curOffsetLoc;
 
+
 	
 			
 		FRotator rot = UKismetMathLibrary::Conv_VectorToRotator((bIsPathMove?m_tarLoc:(m_TargetActor? m_TargetActor->GetActorLocation(): m_tarLoc)) - m_currLoc);
